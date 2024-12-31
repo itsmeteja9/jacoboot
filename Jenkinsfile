@@ -23,15 +23,18 @@ pipeline {
 
         stage('Publish Unit Test Results') {
             steps {
-                // Publish the JUnit test results
-                junit '**/target/test-classes/TEST-*.xml'  // Make sure to adjust the path if necessary
+                // Publish the JUnit test results from the correct directory
+                junit '**/target/surefire-reports/TEST-*.xml'  // Adjusted to the default surefire-reports location
             }
         }
 
         stage('Publish JaCoCo Coverage Report') {
             steps {
                 // Publish the JaCoCo coverage report
-                jacoco execPattern: '**/target/*.exec', classPattern: '**/target/classes', sourcePattern: '**/src/main/java', exclusionPattern: '**/test/**'
+                jacoco execPattern: '**/target/jacoco.exec', 
+                        classPattern: '**/target/classes', 
+                        sourcePattern: '**/src/main/java', 
+                        exclusionPattern: '**/test/**'
             }
         }
     }
